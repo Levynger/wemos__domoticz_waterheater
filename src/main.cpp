@@ -18,7 +18,8 @@ const char* password = "dn760912";
 const char* mqtt_server = "192.168.1.110";
 //StaticJsonBuffer<200> jsonBuffer;
 char     cstr[16];
-int      boxheight;
+int      Lboxheight;
+int      Hboxheight;
 int powerstate = 0;
 bool tempdatabool = 0;
 bool pwrstatebool= 0;
@@ -170,7 +171,7 @@ Serial.println(svalstr);
       powerstate = nvalue;
       u8g2.clearBuffer();
     }
-
+// lower temp sensor
     else if (idx == 119 && (strcmp(topic, "domoticz/in") == 0)) {
       //need to calculate the size of the box
       svalue = root["svalue"];
@@ -184,35 +185,26 @@ Serial.println(svalstr);
       Serial.println("My Power StateBool is: " && pwrstatebool);
       Serial.println("My Temp StateBool is: " && tempdatabool);
       Serial.println("My NoData StateBool is: " && nodata);
-      if (svalue >= 80) {
-          boxheight = 0;
+      if (svalue >= 50) {
+          Lboxheight = 4;
       }
-      else if (svalue < 80 && svalue >= 50){
-        boxheight = 9;
+      else if (svalue < 50 && svalue >= 40){
+        Lboxheight = 3;
       }
-      else if (svalue < 50 && svalue >= 45){
-        boxheight = 18;
-      }
-      else if (svalue < 45 && svalue >= 40){
-        boxheight = 27;
-      }
-      else if (svalue < 40 && svalue >= 35){
-        boxheight = 36;
-      }
-      else if (svalue < 35 && svalue >= 30){
-        boxheight = 45;
+      else if (svalue < 40 && svalue >= 30){
+        Lboxheight = 2;
       }
       else if (svalue < 30 && svalue >= 25){
-        boxheight = 54;
+        Lboxheight = 1;
       }
-      else if (svalue < 25 && svalue >= 0){
-        boxheight = 65;
+      else if (svalue < 25){
+        Lboxheight = 0;
       }
       else {
-        boxheight = 65;
+        Lboxheight = 0;
       }
 
-      boxpos = 65 - boxheight;
+      boxpos = 65 - Lboxheight;
 
       u8g2.clearBuffer();
 
