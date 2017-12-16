@@ -203,21 +203,13 @@ Serial.println(svalstr);
       else {
         Lboxheight = 0;
       }
-
-      boxpos = 65 - Lboxheight;
-
       u8g2.clearBuffer();
 
 
       }
       u8g2.clearBuffer();
       if (pwrstatebool == 1 && tempdatabool == 0) {
-              Serial.println("Bool before drawing to screen");
-      Serial.println("My Power StateBool is: " && pwrstatebool);
-      Serial.println("My Temp StateBool is: " && tempdatabool);
-      Serial.println("My NoData StateBool is: " && nodata);
         if (powerstate == 1){
-          Serial.println("intodevice powerstate 1-0 1");
           //draw power 1
           u8g2.drawDisc(116, 16, 9, U8G2_DRAW_ALL);
         }
@@ -230,12 +222,7 @@ Serial.println(svalstr);
           u8g2.sendBuffer();
       }
       else if (pwrstatebool == 1 && tempdatabool == 1) {
-      Serial.println("Bool before drawing to screen, PWR AND TMP 1");
-      Serial.println("My Power StateBool is: " && pwrstatebool);
-      Serial.println("My Temp StateBool is: " && tempdatabool);
-      Serial.println("My NoData StateBool is: " && nodata);
         if (powerstate == 1){
-          Serial.println("intodevice powerstate 1-1 1");
           //draw power 1
           u8g2.drawDisc(116, 16, 9, U8G2_DRAW_ALL);
         }
@@ -243,12 +230,18 @@ Serial.println(svalstr);
           //draw power 0
           u8g2.drawCircle(116, 16, 9, U8G2_DRAW_ALL);
         }
-          Serial.println(cstr);
-          u8g2.setFont(u8g2_font_logisoso20_tf);
+          //TODO:u8g2.setFont(u8g2_font_logisoso20_tf);
+          //TODO: u8g2.drawUTF8(2,0,cstr);
           u8g2.setFontDirection(1);
-          u8g2.drawUTF8(2,0,cstr);
-          u8g2.drawBox(35,1,boxpos,30);
-          u8g2.drawFrame(35,1,65,30);
+          u8g2.drawFrame(0,11,116,21);
+          u8g2.drawHLine(12, 57, 19);
+          u8g2.drawHLine(12, 60, 19);
+          //u8g2.drawBox(35,1,boxpos,30);
+          switch (Lboxheight) {
+            case 0:;
+
+            case 1:;
+          }
       }
       if (pwrstatebool == 0 && tempdatabool == 0) {
           u8g2.drawXBM( 50, 0, smily_width, smily_height, smily_bits);
@@ -256,13 +249,6 @@ Serial.println(svalstr);
         u8g2.sendBuffer();
       }
 }
-
-
-//void draw(void) {
-//  u8g.setFont(u8g_font_unifont);
-//  u8g.drawStr( 0, 22, "Hello World!");
-//}
-
 
 void reconnect() {
   // Loop until we're reconnected
